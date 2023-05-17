@@ -12,34 +12,47 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Day11Application {
 	private static final Logger logger = LoggerFactory.getLogger(Day11Application.class);
+
+	//default port-number
 	private static final String DEFAULT_PORT = "3000";
 
 	public static void main(String[] args) {
-		logger.info("main method started................");
-		// SpringApplication.run(Day11Application.class, args);
-		SpringApplication app = new SpringApplication(Day11Application.class);
+	 logger.info("main method started ...... ");
 
-		DefaultApplicationArguments appArgs = new DefaultApplicationArguments(args);
-		List opsValue = appArgs.getOptionValues("port");
+	 //initialize the spring app
+	 SpringApplication app = new SpringApplication(Day11Application.class);
 
-		String portNumber = null;
+	 //read args array and check for "port" parameter
 
-		if (opsValue == null || opsValue.get(0) == null){
+	 DefaultApplicationArguments appArgs = new DefaultApplicationArguments(args);
+
+	 List opsValues = appArgs.getOptionValues("port");
+
+	 String portNumber = null;
+
+		// if port numebr is not in argument
+		if(opsValues == null || opsValues.get(0) == null){
+
+			//read port number fromm env variables
 			portNumber = System.getenv("PORT");
-			if (portNumber == null){
+
+			if(portNumber == null){
 				portNumber = DEFAULT_PORT;
 			}
-		} else {
-			portNumber = (String) opsValue.get(0);
+
+		} else{
+		//passing port number from CLI
+		portNumber = (String) opsValues.get(0);
 		}
 
-		if (portNumber != null) {
+		if(portNumber != null){
+			//setting port number in the spring-boot config
 			app.setDefaultProperties(Collections.singletonMap("server.port", portNumber));
 		}
 
-		logger.info("Port number is: " + portNumber);
-
-		app.run(args);
+		logger.info("Port number is : " +portNumber);	
+	//launch spring boot app	
+	app.run(args);
 	}
 
 }
