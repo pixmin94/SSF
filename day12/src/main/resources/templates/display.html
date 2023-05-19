@@ -13,7 +13,7 @@
     <div th:if="${not #lists.isEmpty(imageList)}">
 
         <div th:each="image: ${imageList}">
-            <img width="100" src="${image.path}" />
+            <img width="100" th:src="@{${image.path}}" />
         </div>
     </div>
 </body>

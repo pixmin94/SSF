@@ -19,7 +19,7 @@ public class MainController {
     RandomNumberService service;
 
     @GetMapping("/home")
-    public String langingPage(){
+    public String landingPage(){
         return "home";
     }
 
