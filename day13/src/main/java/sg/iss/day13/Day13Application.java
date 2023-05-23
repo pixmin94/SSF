@@ -14,6 +14,7 @@ public class Day13Application {
 		SpringApplication app = new SpringApplication(Day13Application.class);
 		DefaultApplicationArguments appArgs = new DefaultApplicationArguments(args);
 		List<String> opsVal = appArgs.getOptionValues("dataDir");
+		// String dataDir = String.join("", opsVal);
 		System.out.println(opsVal);
 
 		if (opsVal != null){
@@ -24,6 +25,7 @@ public class Day13Application {
 			System.out.println("dir created: " + isDirCreated + "\nFile path: " + opsVal.get(0));
 			if (!isDirCreated && !dir.exists()) {
 				System.out.println("Failed to create directory: " + dir.getAbsolutePath());
+				// System.setProperty("data.dir", dataDir);
 			}
 			
 
