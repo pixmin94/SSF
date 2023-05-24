@@ -39,4 +39,10 @@ public class ContactController {
         return "showContact";
     }
 
+    @GetMapping(path="/list")
+    public String getAllContacts(Model model) {
+        service.getAllContactInURI(model, dataDir);
+        return "list";
+    }
+
 }

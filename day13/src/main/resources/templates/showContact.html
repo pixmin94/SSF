@@ -4,37 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Contact Added!</title>
 </head>
 <body data-th-object="${contact}">
 
-    <div th:text = "${successMessage}" th:if = "${successMessage != null}" class="success-message" style="color
-:green"></div>
-    <br>
-    <br>
-<a href="/">Back To Home</a>
-    <br>
-<a href="/list">Back To Contact List</a>
+    <div 
+        th:text = "${successMessage}" 
+        th:if = "${successMessage != null}" 
+        class="success-message" 
+        style="color :green"
+    ></div><br><br>
 
-    <h1>Your Contact Information</h1>
+    <a href="/">Back To Home</a><br>
 
-    <p>
-        Id:
-        <p data-th-text="*{id}"></p>
-    </p>
-    <br>
+    <a href="/list">Show Contact List</a>
 
-    <p>
-        Name:
-        <p data-th-text="*{name}"></p>
-    </p>
-    <br>
+    <h3>Your Contact Information: </h3>
 
-    <p>
-        Email:
-        <p data-th-text="*{email}"></p>
-    </p>
-    <br>
+    Id: <div data-th-text="*{id}"></div><br>
+    Name: <div data-th-text="*{name}"></div><br>
+    Email: <div data-th-text="*{email}"></div><br>
 
 </body>
 </html>
