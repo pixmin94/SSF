@@ -55,8 +55,8 @@ public class RedisConfig {
    //redisTemplate.setKeySerializer(new StringRedisSerializer()); //key for list
    redisTemplate.setHashKeySerializer(new StringRedisSerializer()); //key for hash
 
-   //enable redis to store java object on the calue column
-   //enabling teh java object as values in Redis
+   //enable redis to store java object on the value column
+   //enabling the java object as values in Redis
    RedisSerializer<Object> objSerializer = new JdkSerializationRedisSerializer(getClass().getClassLoader());
    //redisTemplate.setValueSerializer(objSerializer); // value for list
    redisTemplate.setHashValueSerializer(objSerializer); // value for hash
