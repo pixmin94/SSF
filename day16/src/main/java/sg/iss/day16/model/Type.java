@@ -2,7 +2,7 @@ package sg.iss.day16.model;
 
 import java.io.Serializable;
 
-import com.google.gson.JsonObject;
+import jakarta.json.JsonObject;
 import jakarta.json.Json;
 import jakarta.json.JsonNumber;
 import jakarta.json.JsonObjectBuilder;

@@ -1,5 +1,10 @@
+package sg.iss.day16.model;
+
 import java.io.Serializable;
-import com.google.gson.JsonObject;
+
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
 import jakarta.json.JsonNumber;
 
 public class Rulebook implements Serializable{
@@ -19,11 +24,19 @@ public class Rulebook implements Serializable{
         this.file = file;
     }
 
-    public static Type createJson(JsonObject o){
+    public JsonObjectBuilder toJSON(){
+        return Json.createObjectBuilder()
+                .add("total_count", this.getTotal_count())
+                .add("file", this.getFile());
+    }
+
+    public static Rulebook createJson(JsonObject o ){
         Rulebook r = new Rulebook();
-        JsonNumber totalCount = o.getJsonNumber("total_count");
-        r.setTotal_count(totalCount.intValue());
-        r.setFile(o.getString("file"));
+        JsonNumber tc = o.getJsonNumber("total_count");
+        String file = o.getString("file");
+        r.setTotal_count(tc.intValue());
+        r.setFile(file);
+        return r;
     }
     
 }
