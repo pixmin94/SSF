@@ -1,5 +1,7 @@
 package sg.iss.day13.config;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,53 +16,51 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class RedisConfig {
+ 
+    @Value("${spring.data.redis.host}")
+    private String redisHost;
 
- @Value("${spring.redis.host}")
- private String redisHost; 
+    @Value("${spring.data.redis.port}")
+    private Optional<Integer> redisPort;
+    
+    @Value("${spring.data.redis.username}")
+    private String redisUsername;
+    
+    @Value("${spring.data.redis.password}")
+    private String redisPassword;
+    
+    @Bean
+    @Scope("singleton")
+    public RedisTemplate<String, Object> redisTemplate(){
+        final RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
+        config.setHostName(redisHost);
+        config.setPort(redisPort.get());
 
- @Value("${spring.redis.port}")
- private Integer redisPort; 
+        if(!redisUsername.isEmpty() && !redisPassword.isEmpty()){
+            config.setUsername(redisUsername);
+            config.setPassword(redisPassword);
+        }
+        config.setDatabase(0);
+        final JedisClientConfiguration jedisClient =  JedisClientConfiguration
+                                .builder()
+                                .build();
 
- @Value("${spring.redis.username}")
- private String redisUser; 
+        final JedisConnectionFactory jedisFac = new JedisConnectionFactory(config, 
+                jedisClient);
+        jedisFac.afterPropertiesSet();
+        
+        RedisTemplate<String, Object> r = new RedisTemplate<String,Object>();
+        r.setConnectionFactory(jedisFac);
+        r.setKeySerializer(new StringRedisSerializer());
+        r.setHashKeySerializer(new StringRedisSerializer());
 
- @Value("${spring.redis.password}")
- private String redisPassword; 
-
-@Bean
-@Scope("singleton")
- public RedisTemplate<String, Object> getRedisTemplate(){
-    final RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-    config.setHostName(redisHost);
-    config.setPort(redisPort);
-
-    if(!redisUser.isEmpty() && !redisPassword.isEmpty()){
-        config.setUsername(redisUser);
-        config.setPassword(redisPassword);
+        RedisSerializer<Object> objSerializer 
+                = new JdkSerializationRedisSerializer(getClass().getClassLoader());
+                
+        r.setValueSerializer(objSerializer);
+        r.setHashValueSerializer(objSerializer);
+        
+        System.out.println("redisHost > " + redisHost);
+        return r;
     }
-   config.setDatabase(0);
-
-   final JedisClientConfiguration jdisClient = JedisClientConfiguration.builder().build();
-
-   //setting up connection with redis database
-   final JedisConnectionFactory jedisFac = new JedisConnectionFactory(config, jdisClient);
-   //initialize and validate connection factory
-   jedisFac.afterPropertiesSet();
-   final RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-
-   //associate to redis connection
-   redisTemplate.setConnectionFactory(jedisFac);
-
-   //set the list key and hash key serialization type to string
-   //redisTemplate.setKeySerializer(new StringRedisSerializer()); //key for list
-   redisTemplate.setHashKeySerializer(new StringRedisSerializer()); //key for hash
-
-   //enable redis to store java object on the value column
-   //enabling the java object as values in Redis
-   RedisSerializer<Object> objSerializer = new JdkSerializationRedisSerializer(getClass().getClassLoader());
-   //redisTemplate.setValueSerializer(objSerializer); // value for list
-   redisTemplate.setHashValueSerializer(objSerializer); // value for hash
-
-    return redisTemplate;
- }    
 }

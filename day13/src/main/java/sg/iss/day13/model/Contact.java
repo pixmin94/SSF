@@ -3,8 +3,9 @@ package sg.iss.day13.model;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotEmpty;
 import java.util.Random;
+import java.io.Serializable;
 
-public class Contact {
+public class Contact implements Serializable {
     @NotNull(message="Name cannot be empty")
     private String name;
 
@@ -54,6 +55,11 @@ public class Contact {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact [name=" + name + ", email=" + email + ", id=" + id + "]";
     }
     
 }

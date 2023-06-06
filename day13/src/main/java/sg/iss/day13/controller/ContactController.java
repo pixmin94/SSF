@@ -14,35 +14,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import sg.iss.day13.model.Contact;
 import sg.iss.day13.service.Contacts;
 
-@Controller
-@RequestMapping(path="/")
-public class ContactController {
-    @Autowired
-    Contacts service;
+// @Controller
+// @RequestMapping(path="/")
+// public class ContactController {
+//     @Autowired
+//     Contacts service;
 
-    @Value("${data.dir}")
-    private String dataDir;
+//     @Value("${data.dir}")
+//     private String dataDir;
     
-    @GetMapping
-    public String showForm(Model model) {
-        model.addAttribute("contact", new Contact());
-        return "form";
-    }
+//     @GetMapping
+//     public String showForm(Model model) {
+//         model.addAttribute("contact", new Contact());
+//         return "form";
+//     }
 
-    @PostMapping(consumes="application/x-www-form-urlencoded", path="/contact")
-    public String saveForm(@Valid Contact contact, BindingResult binding, Model model) {
-        if(binding.hasErrors()) {
-            return "form";
-        }
-        service.save(contact, model, dataDir);
-        model.addAttribute("successMessage", "Contact saved successfully, with status code: " + HttpStatus.CREATED);
-        return "showContact";
-    }
+//     @PostMapping(consumes="application/x-www-form-urlencoded", path="/contact")
+//     public String saveForm(@Valid Contact contact, BindingResult binding, Model model) {
+//         if(binding.hasErrors()) {
+//             return "form";
+//         }
+//         service.save(contact, model, dataDir);
+//         model.addAttribute("successMessage", "Contact saved successfully, with status code: " + HttpStatus.CREATED);
+//         return "showContact";
+//     }
 
-    @GetMapping(path="/list")
-    public String getAllContacts(Model model) {
-        service.getAllContactInURI(model, dataDir);
-        return "list";
-    }
+//     @GetMapping(path="/list")
+//     public String getAllContacts(Model model) {
+//         service.getAllContactInURI(model, dataDir);
+//         return "list";
+//     }
 
-}
+// }
