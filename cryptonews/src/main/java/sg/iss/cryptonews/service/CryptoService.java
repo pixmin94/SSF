@@ -2,6 +2,7 @@ package sg.iss.cryptonews.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.*;
 
 import sg.iss.cryptonews.model.Article;
 import sg.iss.cryptonews.model.Articles;
+import sg.iss.cryptonews.repository.CryptoRepository;
 
 @Service
 public class CryptoService {
@@ -20,6 +22,9 @@ public class CryptoService {
 
     @Value("${crypto.app.apikey}")
     private String cryptoArticleApiKey;
+
+    @Autowired
+    private CryptoRepository repository;
 
     public List<Article> getArticles() throws IOException{   
         String articleUrl = UriComponentsBuilder
@@ -32,6 +37,10 @@ public class CryptoService {
         Articles articles = Articles.createListofArticles(r.getBody());
         System.out.println(articles.getListOfArticles());
         return articles.getListOfArticles();
+    }
+
+    public Optional<Article> getArticleById(String articleId) {
+        return this.repository.get(articleId);
     }
 
     // public void saveArticles(String[] articles) {
