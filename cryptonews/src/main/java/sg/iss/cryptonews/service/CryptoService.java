@@ -14,7 +14,6 @@ import java.util.*;
 import sg.iss.cryptonews.model.Article;
 import sg.iss.cryptonews.model.Articles;
 import sg.iss.cryptonews.repository.CryptoRepository;
-
 @Service
 public class CryptoService {
     @Value("${crypto.app.url}")

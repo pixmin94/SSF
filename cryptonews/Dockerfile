@@ -11,6 +11,8 @@ ARG REDISHOST
 ARG REDISPORT
 ARG REDISUSER
 ARG REDISPASSWORD
+ARG CRYPTO_API_URL
+ARG CRYPTO_API_KEY
 
 RUN mvn -f /home/app/pom.xml clean package
 
@@ -24,6 +26,8 @@ ARG REDISHOST
 ARG REDISPORT
 ARG REDISUSER
 ARG REDISPASSWORD
+ARG CRYPTO_API_URL
+ARG CRYPTO_API_KEY
 
 COPY --from=build /home/app/target/cryptonews-0.0.1-SNAPSHOT.jar /usr/local/lib/cryptonews.jar
 
