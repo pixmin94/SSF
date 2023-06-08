@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+</head>
+<body>
+    <h1>Crypto News of the Day</h1>
+    <form action="#" method="POST" data-th-action="@{/articles}" data-th-object="${articles}">
+        <input type="submit" value="Save">
+        <div
+            th:text = "${successMessage}" 
+            th:if = "${successMessage != null}"
+        ></div>
+        <table>
+            <tr th:each="article,i : ${articles}">
+                <td><span th:text="${article.id}"></span></td>
+                <td><span th:text="${article.tags}"></span></td>
+                <td><input type="checkbox" name="savedArticles" th:id="${article.id}" th:value="${article.toJSON()}" >Save</td>
+            </tr>
+    </table>
+
+    </form>
+
+
+
+</body>
+</html>
